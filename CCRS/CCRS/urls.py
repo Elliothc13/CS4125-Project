@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('recommender', include('recommender.urls')),
     path('admin/', admin.site.urls),
+    path('', include('home.urls')),
+    # path('', include('recommender.urls')),
+    path('', include('django.contrib.auth.urls')),
+    path('', include('login.urls')),
+    
 ]

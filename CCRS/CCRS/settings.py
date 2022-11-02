@@ -37,9 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'recommender',
+    'django.contrib.sites',
+    'django.contrib.sessions',
+    # 'recommender',
     'tokens',
+    'login',
+    'home',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,7 +62,9 @@ ROOT_URLCONF = 'CCRS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'CCRS/templates/CCRS',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
