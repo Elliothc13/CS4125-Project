@@ -10,10 +10,13 @@ class User(models.Model):
         abstract = True
 
 class Volunteer(User):
+    def zero():
+        return 0
     firstName = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
     tokenBalance = models.IntegerField()
-
+    
+    
 class Business(User):
     businessName =models.CharField(max_length=200)
 

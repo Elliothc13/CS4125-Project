@@ -1,15 +1,32 @@
-# from .models import Users
-# class GenerateToken():
-#     def __init__(self, userId, organisationId):
-#         self._userModel = userModel
+from abc import ABC
 
-# # for view
-#     confirmed_events = userModel.getConfirmedEvents()
-#     for event in confirmed events:
-#         render
+class Subject(ABC):
+    def notify(self):
+        pass
 
-# # for process
-#     def gen_token():
-#         validate
+    def attach(self, observer: Observer):
+        pass
+
+    def detach(self, observer: Observer):
+        pass
+
+class Observer(ABC):
+    def update(self, subject: Subject):
+        pass
+
+# class VolunteeringFlow():
+
+class GenerateToken():
+    def __init__(self, userId, organisationId):
+        self._userModel = userModel
+
+# for view
+    confirmed_events = userModel.getConfirmedEvents()
+    for event in confirmed events:
+        render
+
+# for process
+    def gen_token():
+        validate
     
 

@@ -1,8 +1,8 @@
 from django.db import models
+import django.contrib.auth
 
 # Create your models here.
 class User(models.Model):
-    name = models.CharField(max_length=100)
     userId = models.AutoField(primary_key=True)
     userEmail = models.CharField(max_length=200)
 
@@ -17,16 +17,18 @@ class Volunteer(User):
     lastName = models.CharField(max_length=100)
     tokenBalance = models.IntegerField()
     
+    def get_name(self):
+        return self.firstName + ' ' + self.lastName
+    
     def __str__(self):
         return self.firstName + ' ' + self.lastName + ' ' + str(self.userId)
 
 class Business(User):
-    businessName = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+
 
 class Organisation(User):
-    organisationName = models.CharField(max_length=200)
-    # events = models.ForeignKey(Event, blank=True, null=True)
-    #usersWorkedWith = model.
+    name = models.CharField(max_length=200)
 
 class Event(models.Model):
     eventId = models.AutoField(primary_key=True)
@@ -39,6 +41,19 @@ class Event(models.Model):
     def __str__(self):
         return self.name + ' ' + str(self.eventId)
 
+# class UserEvent(models.Model):
+#     class UserStates(models.IntegerChoices):
+#         USER_APPLIED = 1
+#         USER_ADMITTED = 2
+#         TOKENS_REQUESTED = 3
+#         TOKENS_CLAIMED = 4
+    
+#     userId = models.ForeignKey(User)
+#     eventId = models.ForeignKey(Event)
+#     state = models.IntegerField(choices=UserStates.choices)
+    
+
+#     class 
 class Discount(models.Model):
     rewardCode = models.CharField('Reward Code', 
                                   max_length=32, 

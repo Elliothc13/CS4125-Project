@@ -22,5 +22,6 @@ urlpatterns = [
     # path('', include('recommender.urls')),
     path('', include('django.contrib.auth.urls')),
     path('', include('login.urls')),
+    path('tokens/', include('tokens.urls')),
     
 ]
