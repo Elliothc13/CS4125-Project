@@ -8,10 +8,11 @@
         <div>
             <form action="" method="POST">
             {% csrf_token %}
-            <input type="hidden" class="form-control" name="username" placeholder="username">>
-          <h6 class="mb-0">{{ event.name }}</h6>
+            <input type="hidden" class="form-control" name="eventId" value="{{ event.eventId }}">
+          <h6 class="mb-0">{{ event.organiser }} - {{ event.name }}</h6>
           <p class="mb-0 opacity-75"> {{ event.description }}</p>
-          <button class="btn btn-primary" type="submit">Generate Token</button>
+          <p>Status: {{ event.state }}</p>
+          <button class="btn btn-primary {% if event.btDisabled %}disabled{% endif %}" type="submit">Generate Token</button>
         </div>
         <small class="opacity-50 text-nowrap">now</small>
       </div>

@@ -15,7 +15,8 @@ class User(models.Model):
 class Volunteer(User):
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
-    tokenBalance = models.IntegerField()
+    tokenBalance = models.IntegerField(default=1)
+    currentTier = models.IntegerField(default=1)
     
     def get_name(self):
         return self.firstName + ' ' + self.lastName
@@ -41,17 +42,17 @@ class Event(models.Model):
     def __str__(self):
         return self.name + ' ' + str(self.eventId)
 
-# class UserEvent(models.Model):
-#     class UserStates(models.IntegerChoices):
-#         USER_APPLIED = 1
-#         USER_ADMITTED = 2
-#         TOKENS_REQUESTED = 3
-#         TOKENS_CLAIMED = 4
+class VolunteerEvent(models.Model):
+    class UserStates(models.TextChoices):
+        USER_APPLIED = 'USER_APPLIED'
+        USER_ADMITTED = 'USER_ADMITTED'
+        TOKENS_REQUESTED = 'TOKENS_REQUESTED'
+        TOKENS_APPROVED = 'TOKENS_APPROVED'
+        TOKENS_CLAIMED = 'TOKENS_CLAIMED'
     
-#     userId = models.ForeignKey(User)
-#     eventId = models.ForeignKey(Event)
-#     state = models.IntegerField(choices=UserStates.choices)
-    
+    userId = models.ForeignKey(Volunteer, on_delete=models.CASCADE)
+    eventId = models.ForeignKey(Event, on_delete=models.CASCADE)
+    state = models.CharField(max_length=50, choices=UserStates.choices, default=UserStates.USER_ADMITTED)
 
 #     class 
 class Discount(models.Model):
