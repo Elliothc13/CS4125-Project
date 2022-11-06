@@ -53,6 +53,9 @@ class VolunteerEvent(models.Model):
     userId = models.ForeignKey(Volunteer, on_delete=models.CASCADE)
     eventId = models.ForeignKey(Event, on_delete=models.CASCADE)
     state = models.CharField(max_length=50, choices=UserStates.choices, default=UserStates.USER_ADMITTED)
+    
+    def __str__(self):
+        return 'VolunteerEvent: ' + self.userId + ' ' + str(self.eventId)
 
 #     class 
 class Discount(models.Model):

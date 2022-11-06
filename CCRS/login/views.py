@@ -5,7 +5,6 @@ from django.contrib import messages
 
 from tokens.models import Volunteer
 
-# poor design, currently forced by djangos lack of support for same urls with different views (forced binding) and circular redirects
 
 def login_user(request):
     if request.user.is_authenticated:
@@ -44,7 +43,7 @@ def register_user(request):
                                         lastName=request.POST.get('lastName'),
                                         userId = user.id,
                                         userEmail=request.POST.get('email'),
-                                        tokenBalance=0)
+                                        tokenBalance=1)
                 volunteer.save()
                 messages.success(request, ("You were logged in: registration successful"))
                 return redirect('home')

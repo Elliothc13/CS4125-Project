@@ -50,6 +50,20 @@ body {
   margin: 0 auto;
 }
 
+.user-menu{
+  width: 50%;
+}
+
+.tokens{
+  width: 20%;
+  float: left;
+}
+
+#tokensValue{
+  width: 10%;
+  float: left;
+}
+
 .profilepicture {
   width: 2.7rem;
   aspect-ratio: 1/1;

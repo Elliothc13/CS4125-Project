@@ -80,7 +80,7 @@ class GenerateToken:
 
     
     def calculateTokens(self, current_balance, currentTier):
-        return 1
+        return current_balance + currentTier
     
     @staticmethod
     def can_generate_token(currentState):
@@ -94,8 +94,13 @@ class GenerateToken:
     def can_claim_token(currentState):
         return currentState == VolunteerEvent.UserStates.TOKENS_APPROVED
     
+    @staticmethod
+    def get_current_tokens(userId):
+        print(Volunteer.objects.get(userId=userId).tokenBalance)
+        return Volunteer.objects.get(userId=userId).tokenBalance
+    
     def fetchState(self):
-        return VolunteerEvent.objects.get(userId=self.volunteerId, eventId=self.eventId).state
+        return VolunteerEvent.objects.get(userId=self.volunteerId, eventId=int(self.eventId)).state
 
     def request_token(self):
         entry = VolunteerEvent.objects.get(userId=self.volunteerId, eventId=self.eventId)

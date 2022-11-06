@@ -29,7 +29,8 @@ def confirmed_events(request):
                 event_temp.state = entry.state
                 event_temp.btDisabled = not GenerateToken.can_generate_token(event_temp.state)
                 events_to_display.append(event_temp) # caution, Django returns the model not the field here
-            print('-------', events_to_display)
-            return render(request, 'tokens/events_list.html', {'events_list': events_to_display})
+            print('-------', request.user.id)
+            tokenBalance = GenerateToken.get_current_tokens(request.user.id)
+            return render(request, 'tokens/events_list.html', {'events_list': events_to_display, 'tokenBalance': tokenBalance})
         
     return redirect('list-confirmed-events')
