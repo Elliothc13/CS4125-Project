@@ -33,6 +33,7 @@ class VolunteeringFlow:
         self.state = updatedState
         self.notify()
 
+# add abstract before class definition
 # class Observer(ABC):
 #     @abstractmethod
 #     def update(self, subject: Subject):
