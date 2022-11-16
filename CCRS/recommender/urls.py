@@ -1,6 +1,6 @@
 from django.urls import path
-from login import views
+from . import views
 
 urlpatterns = [
-    path('home', views.login_user, name='login')
+    path('recommender', views.confirmed_events, name='list-recommendations')
 ]

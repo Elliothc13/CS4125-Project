@@ -1,0 +1,9 @@
+{% extends 'home/home.html' %}
+{% block content %}
+<p>To request a token, choose the events you helped with. The event organizer will have to validate it</p>
+<br>
+{% block events_block %}
+<h1> events start here</h1>
+{% endblock events_block %}
+<a class="text-center w-100 btn btn-lg btn-secondary" href="{% url 'home' %}">Return to home</a>
+{% endblock content %}
