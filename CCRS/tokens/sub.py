@@ -1,17 +1,20 @@
 from abc import ABC, abstractmethod
-from typing import List
+from threading import currentThread
+from typing import List, Self
+
+from traitlets import ObserveHandler, observe
 from .models import Event, Volunteer, VolunteerEvent
 
-# class Subject(ABC):
-#     @abstractmethod
-#     def attach(self, observer: Observer):
-#         pass
-#     @abstractmethod
-#     def detach(self, observer: Observer):
-#         pass
-#     @abstractmethod
-#     def notify(self):
-#         pass
+class Subject(ABC):
+     @abstractmethod
+     def attach(self, observer: Observer):
+         pass
+     @abstractmethod
+     def detach(self, observer: Observer):
+         pass
+     @abstractmethod
+     def notify(self):
+         pass
 
 class VolunteeringFlow:
     def __init__(self) -> None:
@@ -33,10 +36,11 @@ class VolunteeringFlow:
         self.state = updatedState
         self.notify()
 
-# class Observer(ABC):
-#     @abstractmethod
-#     def update(self, subject: Subject):
-#         pass
+# add abstract before class definition
+class Observer(ABC):
+     @abstractmethod
+     def update(self, subject: Subject):
+         pass
 
 class OrganisationNotifier:
     def __init__(self, organisationId, reactableStates):
@@ -131,26 +135,26 @@ class GenerateToken:
         elif self.can_claim_token(currentState):
             self.claim_token()
 
-    # class VolunteeringFlowState:
-    #     def flow_clear():
-    #         pass
-    #     def advance_flow(current):
-    #         pass
+    class VolunteeringFlowState:
+         def flow_clear():
+             pass
+         def advance_flow(current):
+             pass
 
-    # class TokensRequestedState:
-    #     def flow_clear():
-    #         return True
-    #     def advance_flow():
-    #         if current_state == VolunteerEvent.UserStates.TOKENS_REQUESTED
-    #             user = Volunteer.objects.get(id=self.volunteerId)
-    #             current_balance = user.tokenBalance
-    #             updated_balance = self.calculateTokens(current_balance, currentTier)
-    #             user.tokenBalance = updated_balance
-    #             user.save()
-    #             return True
-    #         return False
-    # class TokensClaimedState:
-    #     def flow_clear():
-    #         return True
-    #     def advance_flow():
-    #         return True
+    class TokensRequestedState:
+         def flow_clear():
+             return True
+         def advance_flow():
+             if current_State == VolunteerEvent.UserStates.TOKENS_REQUESTED:
+                 user = Volunteer.objects.get(id=Self.volunteerId)
+                 current_balance = user.tokenBalance
+                 updated_balance = Self.calculateTokens(current_balance, currentThread)
+                 user.tokenBalance = updated_balance
+                 user.save()
+                 return True
+             return False
+    class TokensClaimedState:
+         def flow_clear():
+             return True
+         def advance_flow():
+             return True

@@ -55,7 +55,7 @@ class VolunteerEvent(models.Model):
     state = models.CharField(max_length=50, choices=UserStates.choices, default=UserStates.USER_ADMITTED)
     
     def __str__(self):
-        return 'VolunteerEvent: ' + self.userId + ' ' + str(self.eventId)
+        return 'VolunteerEvent: ' + str(self.userId) + ' ' + str(self.eventId)
 
 #     class 
 class Discount(models.Model):
