@@ -7,10 +7,10 @@ from .models import Event, Volunteer, VolunteerEvent
 
 class Subject(ABC):
      @abstractmethod
-     def attach(self, observer: Observer):
+     def attach(self, observer: observe):
          pass
      @abstractmethod
-     def detach(self, observer: Observer):
+     def detach(self, observer: observe):
          pass
      @abstractmethod
      def notify(self):
