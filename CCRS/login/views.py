@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from tokens.models import Volunteer
+from tokens.models import Volunteer, Organisation
 
 
 def login_user(request):
@@ -54,3 +54,26 @@ def register_user(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
         
+def register_org(request):
+    # print(request.POST.get('password'))
+    if request.method == 'POST':
+        registrationForm = UserCreationForm(request.POST)
+        if registrationForm.is_valid():
+            registrationForm.save()
+            username = registrationForm.cleaned_data['username']
+            password = registrationForm.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                org = Organisation(name=request.POST.get('organisationName'),
+                                        userId = user.id,
+                                        userEmail=request.POST.get('email'))
+                org.save()
+                messages.success(request, ("You were logged in: registration successful"))
+                return redirect('home')
+        else:
+            messages.error(request, ("Registration failed, please try again"))
+        return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register_org.html', {'form': form})

@@ -18,8 +18,8 @@
   <div class="dropdown">
     <button class="dropbtn">Register as a...</button>
     <div class="dropdown-content">
-      <a href="{% url 'registerorg' %}">Charity Organisation</a>
-      <a href="#">Volunteer</a>
+      <a href="#">Charity Organisation</a>
+      <a href="{% url 'register' %}">Volunteer</a>
       <a href="#">Business</a>
     </div>
   </div>
@@ -27,12 +27,8 @@
       {% csrf_token %}
       {{ form }}
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" name="firstName" placeholder="First name">
-        <label for="floatingInput">First name</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" name="lastName" placeholder="Last name">
-        <label for="floatingInput">Last name</label>
+        <input type="text" class="form-control" name="organisationName" placeholder="name">
+        <label for="floatingText">Organisation name</label>
       </div>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" name="email" placeholder="email">
