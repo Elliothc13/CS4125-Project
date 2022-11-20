@@ -56,7 +56,7 @@
                 </a> -->
 
                 <div class="sidebar">
-                    <a href="#" class="menu-item active">
+                    <a href="{% url 'list-recommendations' %}" class="menu-item active">
                         <span><i class="uil uil-home"></i></span>
                         <h3>Home</h3>
                     </a>
@@ -140,148 +140,9 @@
 
             <div class="middle col-sm-6">
                 {% block content %}
-                <div class="feeds">
-                    
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <!-- <div class="profilepicture">
-                                    <img src="./images/blank-profile-picture.png" alt="yes">
-                                </div> -->
-                                <div class="searchName">
-                                    <a href="#">
-                                        <h3>St. Vincent de Paul</h3>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="photo">
-                            <img src="{% static 'images/svp.png' %}" alt="Look Like This">
-                        </div>
-                        <!-- <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-thumbs-down"></i></span>
-                            </div>
-                        </div> -->
-                        <div class="caption">
-                            <p>placeholder caption</p>
-                        </div>
-                        <div class="interest">
-                          <a href="#"><button class="btn btn-primary">Interested</button></a>
-                          <a href="#"><button class="btn btn-secondary">Not Interested</button></a>
-                        </div>
-                    </div>
-
-                    <!-- <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profilepicture">
-                                    <img src="./images/blank-profile-picture.png" alt="yes">
-                                </div>
-                                <div class="searchName">
-                                    <a href="#">
-                                        <h3>Paul Doe</h3>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="photo">
-                            <img src="./images/user-profile-icon-free-vector.jpg" alt="Look Like This">
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-thumbs-down"></i></span>
-                            </div>
-                        </div>
-                        <div class="caption">
-                            <p>Hello i am paul i like to talk :)</p>
-                        </div>
-                    </div>
-
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profilepicture">
-                                    <img src="./images/blank-profile-picture.png" alt="yes">
-                                </div>
-                                <div class="searchName">
-                                    <a href="#">
-                                        <h3>Jane Doe</h3>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="photo">
-                            <img src="./images/user-profile-icon-free-vector.jpg" alt="Look Like This">
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-thumbs-down"></i></span>
-                            </div>
-                        </div>
-                        <div class="caption">
-                            <p>Hello i am jane i like to talk :)</p>
-                        </div>
-                    </div> -->
-                </div>
                 {% endblock content %}
             </div>
             <div class="right col-sm-2">
-                <!-- <form action="feed2.php" method="POST">
-                    <div class="form-group col-5" id="genderprefradio">
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" name="filter_type"
-                                id="best_match" value="BEST_MATCH">
-                            <label class="form-check-label" for="best_match">Use best match filter</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" name="filter_type"
-                                id="custom_query" value="CUSTOM_QUERY">
-                            <label class="form-check-label" for="custom_query">Use custom filtering</label>
-                        </div>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Other
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Male
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Female
-                        </label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Liked by me
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Those who liked me
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" unchecked>
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Same Interest
-                        </label>
-                    </div>
-                    
-                    </div>
-                    <button href="feed.php" type="submit" name="submit" class="btn btn-primary">Apply Filter</a>
-                </form> -->
                 
             </div>
         </div>

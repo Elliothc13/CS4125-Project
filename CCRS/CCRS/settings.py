@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sessions',
-    # 'recommender',
+    'recommender',
     'tokens',
     'login',
     'home',

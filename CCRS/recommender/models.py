@@ -29,5 +29,3 @@ class Discount(models.Model):
                                   validators=[MinLengthValidator(32)]
                                  )
     expiryDate = models.DateTimeField()
-
-

@@ -1,0 +1,22 @@
+{% extends 'recommender/recommendations.html' %}
+{% block events_block %}
+{% for event in events_list %}
+<div class="list-group w-auto">
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <!-- <img src="https://github.com/twbs.png" alt="twbs" class="rounded-circle flex-shrink-0" width="32" height="32">
+      <div class="d-flex gap-2 w-100 justify-content-between"> -->
+        <div>
+            <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" class="form-control" name="eventId" value="{{ event.eventId }}">
+          <h6 class="mb-0">{{ event.organiser }} - {{ event.name }}</h6>
+          <p class="mb-0 opacity-75"> {{ event.description }}</p>
+          <button class="btn btn-primary {% if event.btDisabled %}disabled{% endif %}" type="submit">Express Interest</button>
+            </form>
+        </div>
+        <!-- <small class="opacity-50 text-nowrap">now</small> -->
+      <!-- </div> -->
+    </a>
+  </div>
+  {% endfor %}
+{% endblock %}
