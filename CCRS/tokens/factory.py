@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from __future__ import annotations
+from typing import List
 class UpgradeVolunteerTierCreator(ABC):
     @abstractmethod
     def createTier(level):
@@ -9,8 +11,6 @@ class UpgradeVolunteerTierCreator(ABC):
         return tierProduct.calculateTokens(hoursWorked)
 
 
-
-
 class TierFactoryConcreteCreator(UpgradeVolunteerTierCreator):
 # create new, different types of instances of a parent
 # classes have same methods, but each method behaves differently
@@ -19,22 +19,55 @@ class TierFactoryConcreteCreator(UpgradeVolunteerTierCreator):
 #
     def createTier(self, level):
         if level == 0:
-            return BronzeTierConcreteProduct()
+            context = Context(ConcreteStrategy())
+            context.do_some_business_logic(1)
+            return context()
         elif level == 1:
-            return SilverTierConcreteProduct()
+            context = Context(ConcreteStrategy())
+            context.do_some_business_logic(2)
+            return context()
         else:
-            return GoldenTierConcreteProduct()
+            context = Context(ConcreteStrategy())
+            context.do_some_business_logic(3)
+            return context()
 
 class TierProduct(ABC):
     def calculateTokens(self, hours_worked):
         pass
 
-class BronzeTierConcreteProduct(TierProduct):
-    def calculateTokens(self, hoursWorked):
-        return hoursWorked * 1
-class SilverTierConcreteProduct(TierProduct):
-    def calculateTokens(self, hoursWorked):
-        return hoursWorked * 2
-class GoldenTierConcreteProduct(TierProduct):
-    def calculateTokens(self, hoursWorked):
-        return hoursWorked * 3
+# class BronzeTierConcreteProduct(TierProduct):
+#     def calculateTokens(self, hoursWorked):
+#         return hoursWorked * 1
+# class SilverTierConcreteProduct(TierProduct):
+#     def calculateTokens(self, hoursWorked):
+#         return hoursWorked * 2
+# class GoldenTierConcreteProduct(TierProduct):
+#     def calculateTokens(self, hoursWorked):
+#         return hoursWorked * 3
+
+
+
+
+class Context():
+
+    def __init__(self, strategy: Strategy) -> None:
+        self._strategy = strategy
+
+    @property
+    def strategy(self) -> Strategy:
+        return self._strategy
+
+    @strategy.setter
+    def strategy(self, strategy: Strategy) -> None:
+        self._strategy = strategy
+
+    def do_some_business_logic(self, hoursWorked, n) -> None:
+        result = self._strategy.do_algorithm(hoursWorked, n)
+        return result
+class Strategy(ABC):
+    @abstractmethod
+    def do_algorithm(self, hoursWorked, n):
+        pass
+class ConcreteStrategy(Strategy):
+    def do_algorithm(self, hoursWorked, n) -> List:
+        return hoursWorked * n
