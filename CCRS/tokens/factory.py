@@ -1,13 +1,33 @@
 from abc import ABC, abstractmethod
+from .models import VolunteerEvent, Volunteer
+
+class TierUpgraderConcreteObserver:
+    def __init__(self, volunteerId) -> None:
+        self.volunteerId = volunteerId
+
+    def update(self, state, entryId):
+        if state == VolunteerEvent.UserStates.TOKENS_APPROVED: # hours have been confirmed
+            UpgradeVolunteerTierCreator.tryUpgradeTier(self.volunteerId)
+
+
 class UpgradeVolunteerTierCreator(ABC):
     @abstractmethod
     def createTier(level):
         pass
 
-    def calculateTokens(level, hoursWorked):
-        tierProduct = createTier(level)
-        return tierProduct.calculateTokens(hoursWorked)
+    @staticmethod
+    def calculateTokens(currentBalance, currentTier, hoursWorked):
+        tierProduct = createTier(currentTier)
+        return tierProduct.calculateTokens(currentBalance, hoursWorked)
 
+    @staticmethod
+    def tryUpgradeTier(volunteerId):
+        user = Volunteer.objects.get(volunteerId=volunteerId)
+        tierProduct = createTier(user.currentTier)
+        if tierProduct.canBeUpgraded(user.hoursLastWeek, user.hoursThisWeek):
+            user.currentTier += 1
+            print("===== Tier of user", user + "upgraded to", user.currentTier)
+            user.save()
 
 
 
@@ -20,7 +40,7 @@ class TierFactoryConcreteCreator(UpgradeVolunteerTierCreator):
     def createTier(self, level):
         if level == 0:
             return BronzeTierConcreteProduct()
-        elif level == 1:
+        elif level == 2:
             return SilverTierConcreteProduct()
         else:
             return GoldenTierConcreteProduct()
