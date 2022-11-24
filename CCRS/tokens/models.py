@@ -2,6 +2,8 @@ from django.db import models
 import django.contrib.auth
 
 # Create your models here.
+
+
 class User(models.Model):
     userId = models.AutoField(primary_key=True)
     userEmail = models.CharField(max_length=200)
@@ -11,7 +13,8 @@ class User(models.Model):
 
     class Meta:
         abstract = True
-    
+
+
 class Volunteer(User):
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
@@ -19,12 +22,13 @@ class Volunteer(User):
     currentTier = models.IntegerField(default=1)
     hoursLastWeek = models.IntegerField(default=0)
     hoursThisWeek = models.IntegerField(default=0)
-    
+
     def get_name(self):
         return self.firstName + ' ' + self.lastName
-    
+
     def __str__(self):
         return self.firstName + ' ' + self.lastName + ' ' + str(self.userId)
+
 
 class Business(User):
     name = models.CharField(max_length=200)
@@ -32,6 +36,7 @@ class Business(User):
 
 class Organisation(User):
     name = models.CharField(max_length=200)
+
 
 class Event(models.Model):
     eventId = models.AutoField(primary_key=True)
@@ -44,6 +49,7 @@ class Event(models.Model):
     def __str__(self):
         return self.name + ' ' + str(self.eventId)
 
+
 class VolunteerEvent(models.Model):
     class UserStates(models.TextChoices):
         USER_APPLIED = 'USER_APPLIED'
@@ -51,18 +57,18 @@ class VolunteerEvent(models.Model):
         TOKENS_REQUESTED = 'TOKENS_REQUESTED'
         TOKENS_APPROVED = 'TOKENS_APPROVED'
         TOKENS_CLAIMED = 'TOKENS_CLAIMED'
-    
+
     userId = models.ForeignKey(Volunteer, on_delete=models.CASCADE)
     eventId = models.ForeignKey(Event, on_delete=models.CASCADE)
-    state = models.CharField(max_length=50, choices=UserStates.choices, default=UserStates.USER_ADMITTED)
-    
+    state = models.CharField(
+        max_length=50, choices=UserStates.choices, default=UserStates.USER_ADMITTED)
+
     def __str__(self):
         return 'VolunteerEvent: ' + str(self.userId) + ' ' + str(self.eventId)
 
-#     class 
+
 class Discount(models.Model):
-    rewardCode = models.CharField('Reward Code', 
-                                  max_length=32, 
-                                  # validators=[MinLengthValidator(32)]
-                                 )
+    rewardCode = models.CharField('Reward Code',
+                                  max_length=32,
+                                  )
     expiryDate = models.DateTimeField()
