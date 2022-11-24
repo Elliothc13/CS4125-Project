@@ -37,17 +37,17 @@ class TierFactoryConcreteCreator(UpgradeVolunteerTierCreator):
     # many factories can exist
     def createTier(self, level):
         if level == 0:
-            context = Context(ConcreteStrategyA())
+            context = Context(BronzeTier())
             context.business_logic(1)
-            return context()
+            return context
         elif level == 1:
-            context = Context(ConcreteStrategyB())
+            context = Context(SilverTier())
             context.business_logic(2)
-            return context()
+            return context
         else:
-            context = Context(ConcreteStrategyC())
+            context = Context(GoldTier())
             context.business_logic(3)
-            return context()
+            return context
 
 
 class TierProduct(ABC):
@@ -74,20 +74,20 @@ class Context():
 
 class Strategy(ABC):
     @abstractmethod
-    def calc_hours(self, hoursWorked):
+    def calculateTokens(self, currentBalance, hoursWorked):
         pass
 
 
-class ConcreteStrategyA(Strategy):
-    def calc_hours(self, hoursWorked) -> List:
-        return hoursWorked * 1
+class BronzeTier(Strategy, TierProduct):
+    def calculateTokens(self, currentBalance, hoursWorked) -> List:
+        return currentBalance + hoursWorked * 1
 
 
-class ConcreteStrategyB(Strategy):
-    def calc_hours(self, hoursWorked) -> List:
-        return hoursWorked * 2
+class SilverTier(Strategy, TierProduct):
+    def calculateTokens(self, currentBalance, hoursWorked) -> List:
+        return currentBalance + hoursWorked * 2
 
 
-class ConcreteStrategyC(Strategy):
-    def calc_hours(self, hoursWorked) -> List:
-        return hoursWorked * 3
+class GoldTier(Strategy, TierProduct):
+    def calculateTokens(self, currentBalance, hoursWorked) -> List:
+        return currentBalance + hoursWorked * 3

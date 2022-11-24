@@ -17,6 +17,8 @@ class Volunteer(User):
     lastName = models.CharField(max_length=100)
     tokenBalance = models.IntegerField(default=1)
     currentTier = models.IntegerField(default=1)
+    hoursLastWeek = models.IntegerField(default=0)
+    hoursThisWeek = models.IntegerField(default=0)
     
     def get_name(self):
         return self.firstName + ' ' + self.lastName

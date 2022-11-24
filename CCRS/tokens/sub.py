@@ -3,7 +3,9 @@ from threading import currentThread
 from typing import List, Self
 
 from traitlets import ObserveHandler, observe
-from .models import Event, Volunteer, VolunteerEvent
+from .models import Event, Volunteer, VolunteerEvent, Organisation
+from .emails import EmailSender
+from .upgrade_tiers import LinkMaker, LinkComponent
 
 class Subject(ABC):
      @abstractmethod
@@ -17,9 +19,12 @@ class Subject(ABC):
          pass
 
 class VolunteeringFlow:
-    def __init__(self) -> None:
+    def __init__(self, entryId) -> None:
+
         super().__init__()
+        
         self.state = None
+        self.entryId = entryId
         self._observers = []
 
     def attach(self, observer):
@@ -30,7 +35,7 @@ class VolunteeringFlow:
 
     def notify(self):
         for observer in self._observers:
-            observer.update(self.state)
+            observer.update(self.state, self.entryId)
     
     def setState(self, updatedState):
         self.state = updatedState
@@ -39,26 +44,27 @@ class VolunteeringFlow:
 # add abstract before class definition
 class Observer(ABC):
      @abstractmethod
-     def update(self, subject: Subject):
+     def update(self, state):
          pass
 
-class OrganisationNotifier:
+class OrganisationNotifier(Observer):
     def __init__(self, organisationId, reactableStates):
         self.organisationId = organisationId
         self.reactableStates = reactableStates
 
-
-    def update(self, state):
+    def update(self, state, entryId):
         if state in self.reactableStates:
             print("========Notifying organisation a user applied for a position")
+            orgEmail = Organisation.objects.get(userId=self.organisationId).userEmail
+            EmailSender.sendEmail("system@email.com", orgEmail, "User needs approval", "User has requested your approval. To approve click here: " + LinkMaker(LinkComponent('http://127.0.0.1:8000/tokens'), '/entryId/' + str(entryId)).getLink())
 
-class VolunteerNotifier:
+class VolunteerNotifier(Observer):
     def __init__(self, volunteerId, reactableStates):
         self.volunteerId = volunteerId
         self.reactableStates = reactableStates
 
 
-    def update(self, state):
+    def update(self, state, entryId):
         if state in self.reactableStates:
             print("========Notifying volunteer organisation approved the tokens to claim")
 
@@ -69,10 +75,10 @@ class GenerateToken:
         self.volunteerId = volunteerId
         self.eventId = eventId
         self.organisationId = organisationId
-        self.subject = VolunteeringFlow()
+        self.subject = VolunteeringFlow(self.fetchEntryId())
         self.states = VolunteerEvent.UserStates
-        self.subject.attach(OrganisationNotifier(organisationId, self.generateOrgStates()))
-        self.subject.attach(VolunteerNotifier(volunteerId, self.generateVolStates()))
+        self.subject.attach(OrganisationNotifier(self.organisationId.userId, self.generateOrgStates()))
+        self.subject.attach(VolunteerNotifier(self.volunteerId, self.generateVolStates()))
     
 
     def generateOrgStates(self):
@@ -106,6 +112,9 @@ class GenerateToken:
     def fetchState(self):
         return VolunteerEvent.objects.get(userId=self.volunteerId, eventId=int(self.eventId)).state
 
+    def fetchEntryId(self):
+        return VolunteerEvent.objects.get(userId=self.volunteerId, eventId=int(self.eventId)).id
+
     def request_token(self):
         entry = VolunteerEvent.objects.get(userId=self.volunteerId, eventId=self.eventId)
         updated_state = self.states.TOKENS_REQUESTED
@@ -135,26 +144,26 @@ class GenerateToken:
         elif self.can_claim_token(currentState):
             self.claim_token()
 
-    class VolunteeringFlowState:
-         def flow_clear():
-             pass
-         def advance_flow(current):
-             pass
+    # class VolunteeringFlowState:
+    #      def flow_clear():
+    #          pass
+    #      def advance_flow(current):
+    #          pass
 
-    class TokensRequestedState:
-         def flow_clear():
-             return True
-         def advance_flow():
-             if current_State == VolunteerEvent.UserStates.TOKENS_REQUESTED:
-                 user = Volunteer.objects.get(id=Self.volunteerId)
-                 current_balance = user.tokenBalance
-                 updated_balance = Self.calculateTokens(current_balance, currentThread)
-                 user.tokenBalance = updated_balance
-                 user.save()
-                 return True
-             return False
-    class TokensClaimedState:
-         def flow_clear():
-             return True
-         def advance_flow():
-             return True
+    # class TokensRequestedState:
+    #      def flow_clear():
+    #          return True
+    #      def advance_flow():
+    #          if current_State == VolunteerEvent.UserStates.TOKENS_REQUESTED:
+    #              user = Volunteer.objects.get(id=Self.volunteerId)
+    #              current_balance = user.tokenBalance
+    #              updated_balance = Self.calculateTokens(current_balance, currentThread)
+    #              user.tokenBalance = updated_balance
+    #              user.save()
+    #              return True
+    #          return False
+    # class TokensClaimedState:
+    #      def flow_clear():
+    #          return True
+    #      def advance_flow():
+    #          return True

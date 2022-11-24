@@ -70,36 +70,36 @@ class LinkDecorator():
     def getLink(self):
         return self._component.getLink()
 
-class UserIdDecorator(LinkDecorator):
+class LinkMaker(LinkDecorator):
     def __init__(self, component: LinkDecorator, text: str) -> None:
-        super().__init__(component)
-        #self.appendToLink(text)
-
-    def appendToLink(self, text):
-        super().appendToLink('/volId/' + text)
-
-class OrganisationIdDecorator(LinkDecorator):
-    def __init__(self, component: Component, text: str) -> None:
-        super().__init__(component)
-        # self.appendToLink(text)
-
-    def appendToLink(self, text):
-        super().appendToLink('/orgId/' + text)
-
-class EventIdDecorator(LinkDecorator):
-    def __init__(self, component: Component, text: str) -> None:
         super().__init__(component)
         self.appendToLink(text)
 
     def appendToLink(self, text):
-        super().appendToLink('/eventId/' + text)
+        super().appendToLink(text)
 
-entry = {'organisationId': '123', 'eventId': '456', 'volunteerId': '789'}
+# class OrganisationIdDecorator(LinkDecorator):
+#     def __init__(self, component: Component, text: str) -> None:
+#         super().__init__(component)
+#         # self.appendToLink(text)
 
-aComponent = LinkComponent('https://127.0.0.1:8000')
-aComponent = OrganisationIdDecorator(aComponent, entry['organisationId'])
-print(aComponent.getLink())
-aComponent = UserIdDecorator(aComponent, entry['volunteerId'])
-print(aComponent.getLink())
-aComponent = EventIdDecorator(aComponent, entry['eventId'])
-print(aComponent.getLink())
+#     def appendToLink(self, text):
+#         super().appendToLink('/orgId/' + text)
+
+# class EventIdDecorator(LinkDecorator):
+#     def __init__(self, component: Component, text: str) -> None:
+#         super().__init__(component)
+#         self.appendToLink(text)
+
+#     def appendToLink(self, text):
+#         super().appendToLink('/eventId/' + text)
+
+
+
+# aComponent = LinkComponent('https://127.0.0.1:8000')
+# aComponent = LinkMaker(aComponent, )
+# print(aComponent.getLink())
+# aComponent = UserIdDecorator(aComponent, entry['volunteerId'])
+# print(aComponent.getLink())
+# aComponent = EventIdDecorator(aComponent, entry['eventId'])
+# print(aComponent.getLink())

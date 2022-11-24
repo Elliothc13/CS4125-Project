@@ -15,7 +15,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user and user.is_authenticated:
             login(request, user)
-            return redirect('home')
+            return redirect('list-recommendations')
         else:
             messages.error(request, ("Login failed, please try again"))
             return redirect('login')
