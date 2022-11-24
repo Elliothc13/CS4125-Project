@@ -1,17 +1,14 @@
 const menuItems = document.querySelectorAll('.menu-item');
 const posts = document.querySelector('.feeds');
 const post = document.querySelectorAll('.searchName');
-// const search = document.querySelector('#searchbarinput');
 const theme = document.querySelector('#theme');
 const themeModal = document.querySelector('.customise-theme');
 const fontSizes = document.querySelectorAll('.choose-size span');
-var root = document.querySelector(':root');
+const root = document.querySelector(':root');
 const background1 = document.querySelector('.background-1');
 const background2 = document.querySelector('.background-2');
 const background3 = document.querySelector('.background-3');
 const generateTokens = document.querySelector('#generatetokens')
-
-// const disableMenuItems = () => changeActiveItem
 
 const changeActiveItem = () => {
     menuItems.forEach(item => {
@@ -132,4 +129,3 @@ const searchMessage = () => {
     })
 }
 generateTokens.addEventListener('click', changeActiveItem);
-// search.addEventListener('keyup', searchMessage)
