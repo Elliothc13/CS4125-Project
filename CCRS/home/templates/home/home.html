@@ -18,7 +18,7 @@
 
 <body>
     <nav>
-        <div class="container">
+        <div class="container"> <!-- header of the page -->
             <h2 class="log">Welcome to the CCRS</h2>
             <div class="user-menu">
                 {% if not user.is_authenticated %}
@@ -36,9 +36,9 @@
         </div>
     </nav>
     {% if user.is_authenticated %}
-    <main>
+    <main> 
         <div class="row">
-            <div class="left col-sm-2 offset-1">
+            <div class="left col-sm-2 offset-1"> <!-- side bar with home, theme, notifications, etc -->
                 <div class="sidebar">
                     <a href="{% url 'list-recommendations' %}" class="menu-item active">
                         <span><em class="uil uil-home"></em></span>
@@ -51,7 +51,7 @@
                     <a href="#" class="menu-item" id="notifications">
                         <span><em class="uil uil-bell"><small class="notification-count">2</small></em></span>
                         <h3>Notifications</h3>
-                        <div class="notifications-popup">
+                        <div class="notifications-popup"> <!-- handled with javascript -->
                             <div>
                                 <div class="profilepicture">
                                     <img src="{% static 'images/blank-profile-picture.png' %}" alt="hi">
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="customise-theme">
+            <div class="customise-theme"> <!-- "Theme" contents that also gets handled by Javascript -->
                 <div class="card">
                     <h2>customise your view</h2>
                     <p>Manage your font size and background.</p>
@@ -132,11 +132,9 @@
         </div>
     </main>
     {% endif %}
-
-  {% block js_block %}
-  <script src="{% static '/js/logic.js' %}"></script>
-  {% endblock %}
-
+    <!-- importing the Javascript -->
+    {% block js_block %}
+    <script src="{% static '/js/logic.js' %}"></script>
+    {% endblock %}
 </body>
-
 </html>

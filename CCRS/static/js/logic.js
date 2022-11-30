@@ -10,12 +10,14 @@ const background2 = document.querySelector('.background-2');
 const background3 = document.querySelector('.background-3');
 const generateTokens = document.querySelector('#generatetokens')
 
+//changes what displays as "active"
 const changeActiveItem = () => {
     menuItems.forEach(item => {
         item.classList.remove('active');
     })
 }
 
+//manages the notifications section
 menuItems.forEach(item => {
     item.addEventListener('click', () => {
         changeActiveItem();
@@ -41,6 +43,7 @@ const closeThemeModal = (e) => {
 
 themeModal.addEventListener('click', closeThemeModal);
 
+//allows the user to click outside the modal to close it
 theme.addEventListener('click', openThemeModal);
 
 const removeSizeSelector = () => {
@@ -89,6 +92,7 @@ const changeBackground = () => {
     root.style.setProperty('--dark-color-lightness', darkColorLightness);
 }
 
+//light background
 background1.addEventListener('click', () => {
     background1.classList.add('active');
     background2.classList.remove('active');
@@ -96,6 +100,7 @@ background1.addEventListener('click', () => {
     window.location.reload();
 })
 
+//dim background
 background2.addEventListener('click', () => {
     darkColorLightness = '95%';
     whiteColorLightness = '20%';
@@ -106,6 +111,7 @@ background2.addEventListener('click', () => {
     changeBackground();
 })
 
+//dark background
 background3.addEventListener('click', () => {
     darkColorLightness = '95%';
     whiteColorLightness = '10%';
