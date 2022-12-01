@@ -19,11 +19,13 @@ class UpgradeVolunteerTierCreator(ABC):
 
     @staticmethod
     def calculateTokens(currentBalance, currentTier, hoursWorked):
+        assert (currentBalance >= 0) #makes sure you dont have a negative ballance of tokens 
         tierProduct = createTier(currentTier)
         return tierProduct.calculateTokens(currentBalance, hoursWorked)
 
     @staticmethod
     def tryUpgradeTier(volunteerId):
+        assert int(volunteerId) #checks that the volunteerID is an int 
         user = Volunteer.objects.get(volunteerId=volunteerId)
         tierProduct = createTier(user.currentTier)
         if tierProduct.canBeUpgraded(user.hoursLastWeek, user.hoursThisWeek):
