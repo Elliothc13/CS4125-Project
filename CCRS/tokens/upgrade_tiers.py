@@ -1,25 +1,42 @@
 from abc import ABC
 
-#from sub import VolunteeringFlow, VolunteerEvent, 
-#from tokens.emails import EmailSender
+from .sub import observe, VolunteerEvent
+from .factory import TierUpgraderConcreteObserver
+from .emails import EmailSender
 
-# class UpgradeTiersControl:
-#     def __init__(self, volunteerId, eventId, organisationId, entryId) -> None:
-#         self.volunteerId = volunteerId
-#         self.eventId = eventId
-#         self.organisationId = organisationId
-#         self.service = NotificationService()
-#         self.states = VolunteerEvent.UserStates
-#         self.subject.attach(OrganisationNotifier(organisationId, self.generateOrgStates()))
-#         self.subject.attach(VolunteerNotifier(volunteerId, self.generateVolStates()))
-#         self.subject.attach(TierUpgraderConcreteObserver(volunteerId))
-#         self.subject.setState()
+class UpgradeTiersControl:
+    def __init__(self, volunteerId, eventId, organisationId, entryId) -> None:
+        self.volunteerId = volunteerId
+        self.eventId = eventId
+        self.organisationId = organisationId
+        self.subject = UpgradeTiersSubject()
+        self.states = VolunteerEvent.UserStates
+        # self.subject.attach(OrganisationNotifier(organisationId, self.generateOrgStates()))
+        # self.subject.attach(VolunteerNotifier(volunteerId, self.generateVolStates()))
+        self.subject.attach(TierUpgraderConcreteObserver(volunteerId))
+        
 
-#     def approveHours():
+    def approveHours(self):
+        print('----- Hours approved')
+        self.subject.setState(self.states.TOKENS_APPROVED)
 
 
 
-# class UpgradeTiersSubject():
+class UpgradeTiersSubject():
+    def __init__(self) -> None:
+        super().__init__()
+        self._state = None
+
+    def attach(self, observer: observe):
+        self._observers.append(observer)
+        
+    def detach(self, observer):
+        self._observers.remove(observer)
+
+    def notify(self):
+        for observer in self._observers:
+            observer.update(self.state, self.entryId) 
+
 # class Client
 # class NotificationService_Publisher:
 

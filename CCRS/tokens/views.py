@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect
 # impoort data from table
-from .models import VolunteerEvent, Event, Volunteer
+from .models import VolunteerEvent, Event, Volunteer, Organisation
 from .sub import GenerateToken
-# Create your views here.
-# from blog.models import Blog
-# b = Blog(name='Beatles Blog', tagline='All the latest Beatles news.')
-# b.save() actually inserts
-
+from .upgrade_tiers import UpgradeTiersControl
+from login.user_utils import check_can_approve
 
 def confirmed_events(request):
     volunteerId = request.user.id
@@ -37,3 +34,25 @@ def confirmed_events(request):
             return render(request, 'tokens/events_list.html', {'events_list': events_to_display, 'tokenBalance': tokenBalance})
 
     return redirect('list-confirmed-events')
+
+
+
+def approve_tokens(request, pk):
+    currentId = request.user.id
+    if request.user.is_authenticated:
+        entry = VolunteerEvent.objects.get(id=pk)
+        if request.method == 'POST':
+            if check_can_approve(entry, currentId, entry.userId):
+                attemptUpgrade = UpgradeTiersControl(entry.userId, entry.eventId, currentId)
+                attemptUpgrade.approveHours()
+            else:
+                return render('logout')
+        else:
+            if entry.eventId.organiser == currentId: # if current user is the organiser
+                name = Volunteer.objects.get(userId=entry.userId).get_name()
+                eventName = Event.objects.get(eventId=entry.eventId).name
+                # show the approval page
+                return render(request, 'tokens/approve_tokens.html', { 'approveForName': name, 'approveForEvent': eventName})
+            return redirect('logout')
+    else:
+        return redirect('login')

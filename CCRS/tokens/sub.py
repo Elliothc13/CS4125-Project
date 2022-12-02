@@ -65,7 +65,7 @@ class OrganisationNotifier(Observer):
             orgEmail = Organisation.objects.get(
                 userId=self.organisationId).userEmail
             EmailSender.sendEmail("system@email.com", orgEmail, "User needs approval", "User has requested your approval. To approve click here: " +
-                                  LinkMaker(LinkComponent('http://127.0.0.1:8000/tokens'), '/entryId/' + str(entryId)).getLink())
+                                  LinkMaker(LinkComponent('http://127.0.0.1:8000/tokens'), '/entryid/' + str(entryId)).getLink())
 
 
 class VolunteerNotifier(Observer):
